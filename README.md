@@ -32,7 +32,7 @@ The models frequently misclassified abstract or speculative questions (e.g., “
 
 ## 📦 How to Run
 
-1. Clone the repo or open the notebook in [Google Colab](https://colab.research.google.com/)
+1. Clone the repo
 2. Install dependencies:
    ```bash
    pip install transformers pandas matplotlib
