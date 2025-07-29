@@ -1,14 +1,13 @@
 # Zero-Shot Classification of Health-Related Questions with BART and RoBERTa
 
-This project uses large language models (LLMs) to classify COVID-related health questions into broad categories using **zero-shot learning** — no labeled training data required.
-
-We evaluate two transformer models (`facebook/bart-large-mnli` and `roberta-large-mnli`) on the [COVID-Q dataset](https://github.com/JerryWei03/COVID-Q), which contains 1,600+ real-world, de-identified health-related questions.
+I built a zero-shot text classification pipeline to categorize health-related questions about COVID-19 using transformer-based models. Specifically, I evaluated two pre-trained Natural Language Inference (NLI) models — facebook/bart-large-mnli and roberta-large-mnli — on the [COVID-Q dataset](https://github.com/JerryWei03/COVID-Q), which contains 1,600+ real-world, de-identified health-related questions. The goal was to classify questions into categories like symptoms, prevention, transmission, and treatment without needing labeled training data.
+This project explores how zero-shot learning can help categorize health-related questions in the absence of labeled data, which is especially useful in emerging public health contexts.
 
 ---
 
 ## Categories Used
 
-We map fine-grained question types to 6 broad categories:
+For this task, I consolidated detailed question types into six high-level categories to enable more generalizable classification.
 
 - `Symptoms`
 - `Testing`
