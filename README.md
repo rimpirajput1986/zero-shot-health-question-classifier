@@ -1,38 +1,62 @@
-# Zero-Shot Classification of Health-Related Questions with BART and RoBERTa
+# Zero-Shot Classification of COVID Health Questions
 
-I built a zero-shot text classification pipeline to categorize health-related questions about COVID-19 using transformer-based models. Specifically, I evaluated two pre-trained Natural Language Inference (NLI) models — facebook/bart-large-mnli and roberta-large-mnli — on the [COVID-Q dataset](https://github.com/JerryWei03/COVID-Q), which contains 1,600+ real-world, de-identified health-related questions. The goal was to classify questions into categories like symptoms, prevention, transmission, and treatment without needing labeled training data.
-This project explores how zero-shot learning can help categorize health-related questions in the absence of labeled data, which is especially useful in emerging public health contexts.
+This project is to explore how pre-trained transformer models can be used to classify real-world COVID-related health questions without task-specific training. The project uses Hugging Face’s `zero-shot-classification` pipeline with questions from the [COVID-Q dataset](https://github.com/JerryWei03/COVID-Q).
 
----
+Although the dataset includes fine-grained labels, this project maps them into broader categories and uses them only for evaluation — no model fine-tuning was performed.
 
-## Categories Used
+## Objective
 
-For this task, I consolidated detailed question types into six high-level categories to enable more generalizable classification.
+To better understand how zero-shot classification works using large pre-trained language models, and to apply it to real text data without supervised training or annotation effort.
 
-- `Symptoms`
-- `Testing`
-- `Treatment`
-- `Social Impact`
-- `Information`
-- `Other`
+## Dataset
 
----
+- **Source**: COVID-Q dataset (Wei et al., 2021)
+- **Content**: ~1,690 de-identified health-related questions about COVID-19
+- **Labeling Approach**:
+  - Original labels were fine-grained (e.g., “Symptoms - Respiratory”)
+  - Mapped into 6 broader evaluation categories:
+    - `Symptoms`, `Testing`, `Treatment`, `Social Impact`, `Information`, `Other`
+
+## Method
+
+1. **Preprocessing**
+   - Filtered out incomplete entries
+   - Extracted the broad category prefix from each label
+   - Mapped them into 6 grouped evaluation categories
+
+2. **Zero-Shot Classification**
+   - Used Hugging Face’s `pipeline()` with `facebook/bart-large-mnli`
+   - Provided candidate category labels for each question
+   - Model returned the top label based on entailment scores
+
+3. **Evaluation**
+   - Compared model-predicted label to grouped label for each question
+   - Used simple accuracy as the evaluation metric
 
 ## Results
 
-| Model                | Top-1 Accuracy | Top-3 Accuracy |
-|---------------------|----------------|----------------|
-| BART-large-MNLI      | 32.08%         | TBD            |
-| RoBERTa-large-MNLI   | 27.74%         | 53.11%         |
+- The model's predictions often aligned with grouped categories, particularly for straightforward questions (e.g., about symptoms or testing)
+- Overall accuracy was reasonable for a zero-shot setup with no fine-tuning
+- Label phrasing and semantic overlap affected predictions noticeably
+- This project served as a practical introduction to using LLMs for basic classification tasks
 
-The models frequently misclassified abstract or speculative questions (e.g., “Will COVID go away?”) as concrete categories like "Symptoms" or "Testing".
+## What I Learned
 
----
+- How to apply Hugging Face’s zero-shot classification tools
+- The importance of candidate label phrasing
+- How to repurpose labeled data for evaluation without training
+- How zero-shot models behave in real-world health Q&A contexts
 
-## 📦 How to Run
+## Tools Used
 
-1. Clone the repo
-2. Install dependencies:
-   ```bash
-   pip install transformers pandas matplotlib
+- Python
+- Hugging Face Transformers
+- Pandas
+- Jupyter Notebook / Google Colab
 
+## Next Steps
+
+This was a learning-focused project. Future directions might include:
+- Testing multi-label classification
+- Fine-tuning on a subset of the labeled dataset
+- Expanding candidate label sets or refining phrasing
